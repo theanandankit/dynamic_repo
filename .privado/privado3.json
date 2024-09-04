@@ -1,0 +1,659 @@
+{
+  "RepoConfigMetaData" : [
+  ],
+  "monolithJsonPath" : [
+  ],
+  "language" : "javascript",
+  "privadoLanguageEngineVersion" : "0.1.18",
+  "privadoMainVersion" : "Not Detected",
+  "gitMetadata" : {
+    
+  },
+  "violations" : [
+    {
+      "policyId" : "Threats.Leakage.isDataLeakingToLog",
+      "policyDetails" : {
+        "name" : "PII data is written to the log files",
+        "policyType" : "threat",
+        "description" : "Sensitive Data written to log files or file system may lead to unauthorized access or exposure to potential attack.",
+        "fix" : "It is not recommended to log Sensitive Data to log files or the file system. The data must be encrypted if it is absolutely necessary to log it.",
+        "action" : "",
+        "tags" : {
+          "CWE-359" : "https://cwe.mitre.org/data/definitions/359.html",
+          "CWE-532" : "https://cwe.mitre.org/data/definitions/532.html",
+          "MSTG-STORAGE-3" : "https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#Testing-Logs-for-Sensitive-Data-MSTG-STORAGE-3",
+          "MITRE" : "Sharing.Exposure"
+        }
+      },
+      "dataFlow" : [
+        {
+          "sourceId" : "Data.Sensitive.PersonalIdentification.FirstName",
+          "sinkId" : "Leakages.Log.Console",
+          "pathIds" : [
+            "55-62-68-74-69"
+          ]
+        }
+      ],
+      "processing" : null
+    }
+  ],
+  "PropertyFileSkippedByDirCount" : {
+    "currentFilesInDirLimit" : "10",
+    "skipList" : [
+    ]
+  },
+  "androidPermissions" : [
+  ],
+  "privadoCoreVersion" : "Not Detected",
+  "sinks" : [
+    {
+      "sourceType" : "Sinks",
+      "sinkType" : "third_parties",
+      "id" : "Sinks.ThirdParties.API.youtube.com",
+      "name" : "Third Party API youtube.com",
+      "domains" : [
+      ],
+      "apiUrl" : [
+        "\"www.youtube.com\""
+      ],
+      "databaseDetails" : {
+        "dbName" : "",
+        "dbVendor" : "",
+        "dbLocation" : "",
+        "dbOperation" : "",
+        "configFile" : "",
+        "schema" : null
+      }
+    },
+    {
+      "sourceType" : "Sinks",
+      "sinkType" : "third_parties",
+      "id" : "ThirdParties.SDK.Google.Cloud",
+      "name" : "Google Cloud",
+      "domains" : [
+        "cloud.google.com"
+      ],
+      "apiUrl" : [
+      ],
+      "databaseDetails" : {
+        "dbName" : "",
+        "dbVendor" : "",
+        "dbLocation" : "",
+        "dbOperation" : "",
+        "configFile" : "",
+        "schema" : null
+      }
+    },
+    {
+      "sourceType" : "Sinks",
+      "sinkType" : "storages",
+      "id" : "Storages.AmazonDynamoDB.ReadAndWrite",
+      "name" : "Amazon Dynamo DB",
+      "domains" : [
+        "aws.amazon.com",
+        "amazon.com"
+      ],
+      "apiUrl" : [
+      ],
+      "databaseDetails" : {
+        "dbName" : "",
+        "dbVendor" : "",
+        "dbLocation" : "",
+        "dbOperation" : "",
+        "configFile" : "",
+        "schema" : null
+      }
+    },
+    {
+      "sourceType" : "Sinks",
+      "sinkType" : "third_parties",
+      "id" : "ThirdParties.SDK.Stripe",
+      "name" : "Stripe",
+      "domains" : [
+        "stripe.com"
+      ],
+      "apiUrl" : [
+      ],
+      "databaseDetails" : {
+        "dbName" : "",
+        "dbVendor" : "",
+        "dbLocation" : "",
+        "dbOperation" : "",
+        "configFile" : "",
+        "schema" : null
+      }
+    },
+    {
+      "sourceType" : "sinks",
+      "sinkType" : "third_parties",
+      "id" : "ThirdParties.SDK.AWS.Lambda",
+      "name" : "AWS Lambda",
+      "domains" : [
+        "lambda.aws.amazon.com"
+      ],
+      "apiUrl" : [
+      ],
+      "databaseDetails" : {
+        "dbName" : "",
+        "dbVendor" : "",
+        "dbLocation" : "",
+        "dbOperation" : "",
+        "configFile" : "",
+        "schema" : null
+      }
+    }
+  ],
+  "privadoCLIVersion" : "Not Detected",
+  "collections" : [
+  ],
+  "repoName" : "dynamic_repo",
+  "processing" : [
+    {
+      "sourceId" : "Data.Sensitive.PersonalIdentification.FirstName",
+      "occurrences" : [
+        {
+          "sample" : "firstName",
+          "lineNumber" : 12,
+          "columnNumber" : 13,
+          "fileName" : "main.js",
+          "excerpt" : "\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n\nstorage.save(firstName) /* <=== __ecma.String */ \n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName)\n",
+          "arguments" : null
+        },
+        {
+          "sample" : "firstName",
+          "lineNumber" : 5,
+          "columnNumber" : 6,
+          "fileName" : "main.js",
+          "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\" /* <=== __ecma.String */ \nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)",
+          "arguments" : null
+        }
+      ]
+    }
+  ],
+  "dataFlow" : {
+    "storages" : [
+      {
+        "sourceId" : "Data.Sensitive.PersonalIdentification.FirstName",
+        "sinks" : [
+          {
+            "sinkType" : "storages",
+            "id" : "Storages.AmazonDynamoDB.ReadAndWrite",
+            "name" : "Amazon Dynamo DB",
+            "category" : "",
+            "domains" : [
+              "aws.amazon.com",
+              "amazon.com"
+            ],
+            "sensitivity" : "",
+            "isSensitive" : false,
+            "tags" : {
+              
+            },
+            "apiUrl" : [
+            ],
+            "databaseDetails" : {
+              "dbName" : "",
+              "dbVendor" : "",
+              "dbLocation" : "",
+              "dbOperation" : "",
+              "configFile" : "",
+              "schema" : null
+            },
+            "paths" : [
+              {
+                "pathId" : "55-62-68-74-80-75",
+                "path" : [
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 5,
+                    "columnNumber" : 6,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\" /* <=== __ecma.String */ \nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 6,
+                    "columnNumber" : 11,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== __ecma.String */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 8,
+                    "columnNumber" : 25,
+                    "fileName" : "main.js",
+                    "excerpt" : "const storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName) /* <=== __ecma.String */ \n\nconsole.log(firstName)\n\nstorage.save(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 10,
+                    "columnNumber" : 12,
+                    "fileName" : "main.js",
+                    "excerpt" : "const firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName) /* <=== __ecma.String */ \n\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 12,
+                    "columnNumber" : 13,
+                    "fileName" : "main.js",
+                    "excerpt" : "\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n\nstorage.save(firstName) /* <=== __ecma.String */ \n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "storage.save(firstName)",
+                    "lineNumber" : 12,
+                    "columnNumber" : 0,
+                    "fileName" : "main.js",
+                    "excerpt" : "\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n\nstorage.save(firstName) /* <=== dynamodb */ \n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName)\n",
+                    "arguments" : null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "internal_apis" : [
+    ],
+    "leakages" : [
+      {
+        "sourceId" : "Data.Sensitive.PersonalIdentification.FirstName",
+        "sinks" : [
+          {
+            "sinkType" : "leakages",
+            "id" : "Leakages.Log.Console",
+            "name" : "Log Console",
+            "category" : "",
+            "domains" : [
+            ],
+            "sensitivity" : "",
+            "isSensitive" : false,
+            "tags" : {
+              
+            },
+            "apiUrl" : [
+            ],
+            "databaseDetails" : {
+              "dbName" : "",
+              "dbVendor" : "",
+              "dbLocation" : "",
+              "dbOperation" : "",
+              "configFile" : "",
+              "schema" : null
+            },
+            "paths" : [
+              {
+                "pathId" : "55-62-68-74-69",
+                "path" : [
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 5,
+                    "columnNumber" : 6,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\" /* <=== __ecma.String */ \nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 6,
+                    "columnNumber" : 11,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== __ecma.String */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 8,
+                    "columnNumber" : 25,
+                    "fileName" : "main.js",
+                    "excerpt" : "const storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName) /* <=== __ecma.String */ \n\nconsole.log(firstName)\n\nstorage.save(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 10,
+                    "columnNumber" : 12,
+                    "fileName" : "main.js",
+                    "excerpt" : "const firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName) /* <=== __ecma.String */ \n\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "console.log(firstName)",
+                    "lineNumber" : 10,
+                    "columnNumber" : 0,
+                    "fileName" : "main.js",
+                    "excerpt" : "const firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName) /* <=== __whatwg.console */ \n\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n",
+                    "arguments" : null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "third_parties" : [
+      {
+        "sourceId" : "Data.Sensitive.PersonalIdentification.FirstName",
+        "sinks" : [
+          {
+            "sinkType" : "third_parties",
+            "id" : "Sinks.ThirdParties.API.youtube.com",
+            "name" : "Third Party API youtube.com",
+            "category" : "",
+            "domains" : [
+            ],
+            "sensitivity" : "",
+            "isSensitive" : false,
+            "tags" : {
+              
+            },
+            "apiUrl" : [
+              "\"www.youtube.com\""
+            ],
+            "databaseDetails" : {
+              "dbName" : "",
+              "dbVendor" : "",
+              "dbLocation" : "",
+              "dbOperation" : "",
+              "configFile" : "",
+              "schema" : null
+            },
+            "paths" : [
+              {
+                "pathId" : "55-62-68-74-80-90-84",
+                "path" : [
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 5,
+                    "columnNumber" : 6,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\" /* <=== __ecma.String */ \nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 6,
+                    "columnNumber" : 11,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== __ecma.String */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 8,
+                    "columnNumber" : 25,
+                    "fileName" : "main.js",
+                    "excerpt" : "const storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName) /* <=== __ecma.String */ \n\nconsole.log(firstName)\n\nstorage.save(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 10,
+                    "columnNumber" : 12,
+                    "fileName" : "main.js",
+                    "excerpt" : "const firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName) /* <=== __ecma.String */ \n\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 12,
+                    "columnNumber" : 13,
+                    "fileName" : "main.js",
+                    "excerpt" : "\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n\nstorage.save(firstName) /* <=== __ecma.String */ \n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 16,
+                    "columnNumber" : 18,
+                    "fileName" : "main.js",
+                    "excerpt" : "\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName) /* <=== __ecma.String */ \n\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "request.post(url, firstName)",
+                    "lineNumber" : 16,
+                    "columnNumber" : 0,
+                    "fileName" : "main.js",
+                    "excerpt" : "\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName) /* <=== axios */ \n\n",
+                    "arguments" : null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sinkType" : "third_parties",
+            "id" : "ThirdParties.SDK.Google.Cloud",
+            "name" : "Google Cloud",
+            "category" : "",
+            "domains" : [
+              "cloud.google.com"
+            ],
+            "sensitivity" : "",
+            "isSensitive" : false,
+            "tags" : {
+              
+            },
+            "apiUrl" : [
+            ],
+            "databaseDetails" : {
+              "dbName" : "",
+              "dbVendor" : "",
+              "dbLocation" : "",
+              "dbOperation" : "",
+              "configFile" : "",
+              "schema" : null
+            },
+            "paths" : [
+              {
+                "pathId" : "55-62-68-63",
+                "path" : [
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 5,
+                    "columnNumber" : 6,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\" /* <=== __ecma.String */ \nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 6,
+                    "columnNumber" : 11,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== __ecma.String */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 8,
+                    "columnNumber" : 25,
+                    "fileName" : "main.js",
+                    "excerpt" : "const storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName) /* <=== __ecma.String */ \n\nconsole.log(firstName)\n\nstorage.save(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "AccessApprovalClient.put(firstName)",
+                    "lineNumber" : 8,
+                    "columnNumber" : 0,
+                    "fileName" : "main.js",
+                    "excerpt" : "const storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName) /* <=== @google-cloud/access-approval */ \n\nconsole.log(firstName)\n\nstorage.save(firstName)\n",
+                    "arguments" : null
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "sinkType" : "third_parties",
+            "id" : "ThirdParties.SDK.Stripe",
+            "name" : "Stripe",
+            "category" : "",
+            "domains" : [
+              "stripe.com"
+            ],
+            "sensitivity" : "",
+            "isSensitive" : false,
+            "tags" : {
+              
+            },
+            "apiUrl" : [
+            ],
+            "databaseDetails" : {
+              "dbName" : "",
+              "dbVendor" : "",
+              "dbLocation" : "",
+              "dbOperation" : "",
+              "configFile" : "",
+              "schema" : null
+            },
+            "paths" : [
+              {
+                "pathId" : "55-62-57",
+                "path" : [
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 5,
+                    "columnNumber" : 6,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\" /* <=== __ecma.String */ \nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "firstName",
+                    "lineNumber" : 6,
+                    "columnNumber" : 11,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== __ecma.String */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+                    "arguments" : null
+                  },
+                  {
+                    "sample" : "stripe.put(firstName)",
+                    "lineNumber" : 6,
+                    "columnNumber" : 0,
+                    "fileName" : "main.js",
+                    "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== stripe */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+                    "arguments" : null
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "probableSinks" : [
+    "stripe"
+  ],
+  "createdAt" : 1725122252641,
+  "sinkProcessing" : [
+    {
+      "sinkId" : "Sinks.ThirdParties.API.youtube.com",
+      "occurrences" : [
+        {
+          "sample" : "request.post(url, firstName)",
+          "lineNumber" : 16,
+          "columnNumber" : 0,
+          "fileName" : "main.js",
+          "excerpt" : "\nstorage.save(firstName)\n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName) /* <=== axios */ \n\n",
+          "arguments" : null
+        }
+      ]
+    },
+    {
+      "sinkId" : "ThirdParties.SDK.Google.Cloud",
+      "occurrences" : [
+        {
+          "sample" : "AccessApprovalClient.put(firstName)",
+          "lineNumber" : 8,
+          "columnNumber" : 0,
+          "fileName" : "main.js",
+          "excerpt" : "const storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName)\n\nAccessApprovalClient.put(firstName) /* <=== @google-cloud/access-approval */ \n\nconsole.log(firstName)\n\nstorage.save(firstName)\n",
+          "arguments" : null
+        },
+        {
+          "sample" : "google-cloud-storage==1.26.0",
+          "lineNumber" : 1,
+          "columnNumber" : -1,
+          "fileName" : "requirement.txt",
+          "excerpt" : "google-cloud-storage==1.26.0 <===",
+          "arguments" : null
+        }
+      ]
+    },
+    {
+      "sinkId" : "Storages.AmazonDynamoDB.ReadAndWrite",
+      "occurrences" : [
+        {
+          "sample" : "storage.save(firstName)",
+          "lineNumber" : 12,
+          "columnNumber" : 0,
+          "fileName" : "main.js",
+          "excerpt" : "\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n\nstorage.save(firstName) /* <=== dynamodb */ \n\nconst url = \"www.youtube.com\"\n\nrequest.post(url, firstName)\n",
+          "arguments" : null
+        }
+      ]
+    },
+    {
+      "sinkId" : "ThirdParties.SDK.Stripe",
+      "occurrences" : [
+        {
+          "sample" : "stripe.put(firstName)",
+          "lineNumber" : 6,
+          "columnNumber" : 0,
+          "fileName" : "main.js",
+          "excerpt" : "const { AccessApprovalClient } = require('@google-cloud/access-approval');\nconst stripe = require('stripe')\nconst storage = require('dynamodb')\nconst request = require('axios')\nconst firstName = \"ppp\"\nstripe.put(firstName) /* <=== stripe */ \n\nAccessApprovalClient.put(firstName)\n\nconsole.log(firstName)\n",
+          "arguments" : null
+        },
+        {
+          "sample" : "        \"stripe\": \"^8.184.0\"",
+          "lineNumber" : 3,
+          "columnNumber" : -1,
+          "fileName" : "package.json",
+          "excerpt" : "        \"stripe\": \"^8.184.0\" <===",
+          "arguments" : null
+        }
+      ]
+    },
+    {
+      "sinkId" : "ThirdParties.SDK.AWS.Lambda",
+      "occurrences" : [
+        {
+          "sample" : "    implementation(\"com.amazonaws:aws-java-sdk-lambda:1.9.7\")",
+          "lineNumber" : 2,
+          "columnNumber" : -1,
+          "fileName" : "build.gradle",
+          "excerpt" : "    implementation(\"com.amazonaws:aws-java-sdk-lambda:1.9.7\") <===",
+          "arguments" : null
+        }
+      ]
+    }
+  ],
+  "PropertyFileSkippedBySize" : {
+    "currentFileSizeLimit" : "5",
+    "skipLists" : [
+    ]
+  },
+  "localScanPath" : "/Users/ankit-privado/Desktop/privado/testing-repo/dynamic_repo",
+  "sources" : [
+    {
+      "sourceType" : "Data Element",
+      "id" : "Data.Sensitive.PersonalIdentification.FirstName",
+      "name" : "First Name",
+      "category" : "Personal Identification",
+      "sensitivity" : "low",
+      "isSensitive" : false,
+      "tags" : {
+        "law" : "GDPR"
+      }
+    }
+  ]
+}

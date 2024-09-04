@@ -1,0 +1,5 @@
+{
+    "dependencies": {
+        "google-cloud": "^8.0"
+    }
+}
