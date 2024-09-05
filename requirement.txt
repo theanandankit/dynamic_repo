@@ -1,1 +1,11 @@
-google-cloud-storage==1.26.0
+Reponame: dynamic_repo/script
+Filepath: script/package.json
+Data Category: cloud.google.com
+Data Element: Google Cloud
+Matching string:         "google-cloud": "^8.0"
+
+Code: `{
+    "dependencies": {
+        "google-cloud": "^8.0" /* <===  */ 
+    }
+}`
