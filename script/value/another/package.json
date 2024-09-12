@@ -1,5 +1,5 @@
 {
     "dependencies": {
-        "google-cloud": "^8.0"
+        "@google-cloud/storage": "^8.0"
     }
 }
